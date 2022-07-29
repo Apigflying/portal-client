@@ -62,9 +62,9 @@ const Login: React.FC = () => {
         });
         message.success(defaultLoginSuccessMessage);
 
-        const token = result.payload.token;
+        const token = result?.payload?.token;
         // 保存登录的token
-        localStorage.setItem(TOKEN, token);
+        token && localStorage.setItem(TOKEN, token);
 
         await getUserInfo();
         const urlParams = new URL(window.location.href).searchParams;

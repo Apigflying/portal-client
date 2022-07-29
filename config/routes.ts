@@ -1,4 +1,12 @@
-﻿/**
+﻿/*
+ * @Author: Json Chen
+ * @Date: 2022-07-20 15:57:14
+ * @LastEditTime: 2022-07-29 11:08:20
+ * @LastEditors: Json Chen
+ * @Description:
+ * @FilePath: /mars-antd-pro/config/routes.ts
+ */
+/**
  * @name umi 的路由配置
  * @description 只支持 path,component,routes,redirect,wrappers,title 的配置
  * @param path  path 只支持两种占位符配置，第一种是动态参数 :id 的形式，第二种是 * 通配符，通配符只能出现路由字符串的最后。
@@ -10,16 +18,50 @@
  */
 export default [
   {
-    path: '/user',
+    path: '/login',
+    name: 'login',
     layout: false,
-    routes: [
-      {
-        name: 'login',
-        path: '/user/login',
-        component: './User/Login',
-      },
-    ],
+    component: './Login',
   },
+  {
+    path: '/home',
+    name: 'home',
+    icon: 'home',
+    component: './index',
+  },
+  {
+    path: '/user',
+    name: 'user',
+    icon: 'user',
+    routes: [{
+      path: '/user/list',
+      name: 'list',
+      access: 'USER_READ',
+      icon: 'useradd',
+      component: './User'
+    }, {
+      path: '/user/group/list',
+      name: 'group.list',
+      access: 'USER_GROUP_READ',
+      icon: 'usergroupadd',
+      component: './UserGroup'
+    }]
+  }, {
+    path: '/setting',
+    name: 'setting',
+    icon: 'setting',
+    access: 'SETTING_READ',
+    component: './Setting'
+  }, {
+    path: '/logs',
+    name: 'log',
+    icon: 'calendar',
+    access: 'LOG_READ',
+    component: './Log'
+  },
+
+
+
   {
     path: '/welcome',
     name: 'welcome',
@@ -46,9 +88,11 @@ export default [
     path: '/list',
     component: './TableList',
   },
+
+
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/home',
   },
   {
     path: '*',

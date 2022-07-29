@@ -1,7 +1,7 @@
 /*
  * @Author: Json Chen
  * @Date: 2022-07-20 15:57:14
- * @LastEditTime: 2022-07-28 15:04:37
+ * @LastEditTime: 2022-07-29 11:12:05
  * @LastEditors: Json Chen
  * @Description:
  * @FilePath: /mars-antd-pro/config/proxy.ts
@@ -22,7 +22,7 @@ export default {
     // localhost:8000/api/** -> https://preview.pro.ant.design/api/**
     '/api/': {
       // 要代理的地址
-      target: 'http://localhost:6967',
+      target: 'http://localhost:6003',
       // 配置了这个可以从 http 代理到 https
       // 依赖 origin 的功能可能需要这个，比如 cookie
       changeOrigin: true,

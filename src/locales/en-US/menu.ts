@@ -1,3 +1,11 @@
+/*
+ * @Author: Json Chen
+ * @Date: 2022-07-20 15:57:15
+ * @LastEditTime: 2022-07-29 10:39:47
+ * @LastEditors: Json Chen
+ * @Description:
+ * @FilePath: /mars-antd-pro/src/locales/en-US/menu.ts
+ */
 export default {
   'menu.welcome': 'Welcome',
   'menu.more-blocks': 'More Blocks',
@@ -49,4 +57,6 @@ export default {
   'menu.editor.flow': 'Flow Editor',
   'menu.editor.mind': 'Mind Editor',
   'menu.editor.koni': 'Koni Editor',
+
+  'menu.user': 'user manage',
 };

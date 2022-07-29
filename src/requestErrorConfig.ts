@@ -101,6 +101,13 @@ export const errorConfig: RequestConfig = {
       if (authorization) {
         _headers['Authorization'] = authorization;
       }
+
+
+      if (config.method.toUpperCase() !== 'GET') {
+        _headers['Content-Type'] = 'application/json'
+      }
+
+
       return { ...config, headers: _headers, };
     },
   ],

@@ -1,7 +1,7 @@
 /*
  * @Author: Json Chen
  * @Date: 2022-07-20 15:57:15
- * @LastEditTime: 2022-07-28 15:58:32
+ * @LastEditTime: 2022-07-29 15:41:57
  * @LastEditors: Json Chen
  * @Description:
  * @FilePath: /mars-antd-pro/src/locales/zh-CN/pages.ts
@@ -13,6 +13,11 @@ export default {
   'pages.login.error.401002': '登录验证码输入错误',
   'pages.login.error.401003': '用户已被锁定',
   'pages.login.error.401004': '用户已被删除',
+  'pages.user.group.name.exist': '用户组已存在',
+
+
+
+  // =========================================================
 
   'pages.login.failure': '登录失败，请重试！',
   'pages.login.success': '登录成功！',
@@ -74,5 +79,7 @@ export default {
   'pages.searchTable.tenThousand': '万',
   'pages.searchTable.batchDeletion': '批量删除',
   'pages.searchTable.batchApproval': '批量审批',
+
+
 
 };

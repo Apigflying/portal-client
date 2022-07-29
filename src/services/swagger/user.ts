@@ -1,3 +1,11 @@
+/*
+ * @Author: Json Chen
+ * @Date: 2022-07-20 15:57:15
+ * @LastEditTime: 2022-07-29 09:44:09
+ * @LastEditors: Json Chen
+ * @Description:
+ * @FilePath: /mars-antd-pro/src/services/swagger/user.ts
+ */
 // @ts-ignore
 /* eslint-disable */
 import { request } from '@umijs/max';
@@ -72,21 +80,6 @@ export async function createUsersWithListInput(body: API.User[], options?: { [ke
   return request<any>('/user/createWithList', {
     method: 'POST',
     data: body,
-    ...(options || {}),
-  });
-}
-
-/** Logs user into the system GET /user/login */
-export async function loginUser(
-  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.loginUserParams,
-  options?: { [key: string]: any },
-) {
-  return request<string>('/user/login', {
-    method: 'GET',
-    params: {
-      ...params,
-    },
     ...(options || {}),
   });
 }

@@ -10,7 +10,7 @@ import { getUserInfo } from './services/mars/api';
 import { TOKEN } from './utils/constant';
 
 const isDev = process.env.NODE_ENV === 'development';
-const loginPath = '/user/login';
+const loginPath = '/login';
 
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;

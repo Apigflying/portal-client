@@ -1,7 +1,7 @@
 /*
  * @Author: Json Chen
  * @Date: 2022-07-20 15:57:14
- * @LastEditTime: 2022-07-28 17:53:47
+ * @LastEditTime: 2022-07-29 11:46:31
  * @LastEditors: Json Chen
  * @Description:
  * @FilePath: /mars-antd-pro/config/defaultSettings.ts
@@ -25,7 +25,7 @@ const Settings: LayoutSettings & {
   colorWeak: false,
   title: 'Unify Ops Datahub',
   pwa: false,
-  logo: 'http://localhost:6967/static/favicon.ico',
+  logo: 'http://localhost:6003/static/favicon.ico',
   iconfontUrl: '',
 };
 

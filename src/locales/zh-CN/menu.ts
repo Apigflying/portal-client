@@ -1,3 +1,11 @@
+/*
+ * @Author: Json Chen
+ * @Date: 2022-07-20 15:57:15
+ * @LastEditTime: 2022-07-29 13:29:18
+ * @LastEditors: Json Chen
+ * @Description:
+ * @FilePath: /mars-antd-pro/src/locales/zh-CN/menu.ts
+ */
 export default {
   'menu.welcome': '欢迎',
   'menu.more-blocks': '更多区块',
@@ -49,4 +57,11 @@ export default {
   'menu.editor.flow': '流程编辑器',
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
+
+
+  'menu.user': '用户管理',
+  'menu.user.list': '用户列表',
+  'menu.user.group.list': '用户组列表',
+  'menu.setting': '设置',
+  'menu.log': '日志',
 };
