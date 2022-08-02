@@ -46,11 +46,13 @@ declare namespace API {
     group?: string[];
     permission?: string[];
     createdAt?: string;
+    isLock?: boolean;
+    isSuper?: boolean;
   }
 
 
   type UserGroup = {
-    _id?: string;
+    _id: string;
     name?: string;
     access?: string[];
     createdAt?: string;
@@ -58,8 +60,18 @@ declare namespace API {
     isDel?: boolean;
   }
 
+  type Log = {
+    ip?: string;
+    user?: string;
+    url?: string;
+    action?: string;
+    remark?: string;
+    success?: boolean;
+    reason?: string;
+    createdAt?: string;
+  }
 
-
+  // mongoose-pagation-v2 返回的数据结构
   type PagationData<T> = {
     docs: T[];
     hasNextPage?: boolean;
@@ -81,6 +93,14 @@ declare namespace API {
     // 数据总数
     total?: number;
   }
+
+
+  type LogDistinct = {
+    actionDist: string[];
+    userDist: string[];
+  }
+
+
 
   type UserGroupNameExistParams = {
     name: string,
@@ -105,6 +125,9 @@ declare namespace API {
   type UserInfoResult = Merge<ResponseResult, {
     payload: UserInfo
   }>;
+  type UserGroupResult = Merge<ResponseResult, {
+    payload: UserGroup
+  }>;
 
   type UserGroupListResult = Merge<ResponseResult, {
     payload?: PagationData<UserGroup>
@@ -127,6 +150,26 @@ declare namespace API {
   type UserPermissionResult = Merge<ResponseResult, {
     payload: string[]
   }>;
+
+  type LogDistinctResult = Merge<ResponseResult, {
+    payload: LogDistinct
+  }>;
+
+  type LogListResult = Merge<ResponseResult, {
+    payload?: PagationData<Log>
+  }>;
+
+  type Setting = {
+    ipWhitelist: string,
+    ipCheck: boolean,
+  }
+
+  type SettingResult = Merge<ResponseResult, {
+    payload: SetSchemaResult
+  }>
+  type UserListResult = Merge<ResponseResult, {
+    payload?: PagationData<UserInfo>
+  }>
 
 
 

@@ -1,42 +1,35 @@
 /*
  * @Author: Json Chen
  * @Date: 2022-07-20 15:57:15
- * @LastEditTime: 2022-07-29 18:03:14
+ * @LastEditTime: 2022-08-02 16:57:35
  * @LastEditors: Json Chen
  * @Description:
- * @FilePath: /mars-antd-pro/src/services/mars/api.ts
+ * @FilePath: /mars-antd-pro/src/services/mars/user.ts
  */
 // @ts-ignore
 /* eslint-disable */
-import { API_PREFIX, PORTAL_API_PREFIX } from '@/utils/constant';
+import { PORTAL_API_PREFIX } from '@/utils/constant';
 import { request } from '@umijs/max';
 
 
-/** 登录接口 POST /api/login */
-export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
-  return request<API.LoginResult>(`${API_PREFIX}/login`, {
-    method: 'POST',
-    data: body,
-    ...(options || {}),
-  });
-}
-
-/** 刷新验证码 GET /api/login/captcha */
-export async function getCaptcha(options?: { [key: string]: any }): Promise<any> {
-  return request<API.LoginResult>(`${API_PREFIX}/login/captcha`, {
-    method: 'GET',
-    ...(options || {}),
-  });
-};
-
-
-/** 获取当前的用户 GET /api/currentUser */
+/** 获取当前的用户信息 */
 export async function getUserInfo(options?: { [key: string]: any }) {
   return request<API.UserInfoResult>(`${PORTAL_API_PREFIX}/user/info`, {
     method: 'GET',
     ...(options || {}),
   });
 }
+
+/** 获取用户列表 */
+export async function getUserList(options?: { [key: string]: any }) {
+  return request<API.UserListResult>(`${PORTAL_API_PREFIX}/user/list`, {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
+
+
 
 // 获取用户组列表
 export async function getUserGroupList(options?: { [key: string]: any }) {
@@ -54,6 +47,16 @@ export async function checkUserGroupName(body: API.UserGroupNameExistParams, opt
     ...(options || {}),
   });
 }
+
+
+export async function delUserGroup(id: string, options?: { [key: string]: any }) {
+  return request<API.UserGroupListResult>(`${PORTAL_API_PREFIX}/user/group/del/${id}`, {
+    method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
+
 // 获取所有的权限
 export async function getAllAccess(options?: { [key: string]: any }) {
   return request<API.UserPermissionResult>(`${PORTAL_API_PREFIX}/user/all_access`, {
@@ -63,7 +66,7 @@ export async function getAllAccess(options?: { [key: string]: any }) {
 }
 // 获取用户组详情
 export async function getUserGroupDetail(id: string, options?: { [key: string]: any }) {
-  return request<API.UserGroup>(`${PORTAL_API_PREFIX}/user/group/detail/${id}`, {
+  return request<API.UserGroupResult>(`${PORTAL_API_PREFIX}/user/group/detail/${id}`, {
     method: 'GET',
     ...(options || {}),
   });

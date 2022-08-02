@@ -1,5 +1,5 @@
 import Footer from '@/components/Footer';
-import { getCaptcha, login } from '@/services/mars/api';
+import { getCaptcha, login } from '@/services/mars/login';
 import { TOKEN } from '@/utils/constant';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import {

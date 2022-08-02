@@ -1,7 +1,7 @@
 /*
  * @Author: Json Chen
  * @Date: 2022-07-20 15:57:15
- * @LastEditTime: 2022-07-29 15:41:57
+ * @LastEditTime: 2022-08-02 17:47:34
  * @LastEditors: Json Chen
  * @Description:
  * @FilePath: /mars-antd-pro/src/locales/zh-CN/pages.ts
@@ -13,6 +13,9 @@ export default {
   'pages.login.error.401002': '登录验证码输入错误',
   'pages.login.error.401003': '用户已被锁定',
   'pages.login.error.401004': '用户已被删除',
+  'pages.login.error.401006': '登录已过期',
+  'pages.login.error.401007': 'IP限制不能登录',
+
   'pages.user.group.name.exist': '用户组已存在',
 
 

@@ -1,4 +1,4 @@
-import { addRule, removeRule, rule, updateRule } from '@/services/mars/api';
+import { addRule, removeRule, rule, updateRule } from '@/services/mars/user';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns, ProDescriptionsItemProps } from '@ant-design/pro-components';
 import {

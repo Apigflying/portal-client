@@ -1,11 +1,3 @@
-/*
- * @Author: Json Chen
- * @Date: 2022-07-29 14:43:11
- * @LastEditTime: 2022-08-02 10:45:44
- * @LastEditors: Json Chen
- * @Description:
- * @FilePath: /mars-antd-pro/src/pages/UserGroup/Components/ModalForm.tsx
- */
 import {
   checkUserGroupName,
   createUserGroup,

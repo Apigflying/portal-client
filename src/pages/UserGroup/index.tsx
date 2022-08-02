@@ -1,21 +1,33 @@
 /*
  * @Author: Json Chen
  * @Date: 2022-07-29 09:44:28
- * @LastEditTime: 2022-07-29 18:03:27
+ * @LastEditTime: 2022-08-02 11:29:26
  * @LastEditors: Json Chen
  * @Description:
  * @FilePath: /mars-antd-pro/src/pages/UserGroup/index.tsx
  */
-import { getUserGroupList } from '@/services/mars/api';
+import { delUserGroup, getAllAccess, getUserGroupList } from '@/services/mars/user';
 import { formatPagation } from '@/utils/format';
 import { PlusOutlined } from '@ant-design/icons';
-import { ProColumns, ProTable } from '@ant-design/pro-components';
-import { Button, Space, Tag } from 'antd';
+import { ActionType, ProColumns, ProTable } from '@ant-design/pro-components';
+import { useRequest } from '@umijs/max';
+import { Button, Popconfirm, Space, Tag } from 'antd';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import ModalForm from './Components/ModalForm';
 
 export default () => {
+  const actionRef = useRef<ActionType>();
+  const { data: _allAccess } = useRequest(getAllAccess);
+
+  const allAccess = (_allAccess || []) as string[];
+  const handleDelete = async (id: string) => {
+    const result = await delUserGroup(id);
+    if (result.success) {
+      actionRef.current?.reload();
+    }
+  };
+
   const columns: ProColumns<API.UserGroup>[] = [
     {
       title: 'Name',
@@ -52,8 +64,21 @@ export default () => {
         console.log('_id: ', _id);
         return (
           <Space>
-            <ModalForm id={_id} title="编辑用户组" button={<Button type="text">编辑</Button>} />
-            <Button type="text">删除</Button>
+            <ModalForm
+              reload={actionRef.current?.reload}
+              id={_id}
+              allAccess={allAccess}
+              title="编辑用户组"
+              button={<Button type="text">编辑</Button>}
+            />
+            <Popconfirm
+              title="确认删除吗?"
+              onConfirm={() => handleDelete(_id)}
+              okText="确认"
+              cancelText="取消"
+            >
+              <Button type="text">删除</Button>
+            </Popconfirm>
           </Space>
         );
       },
@@ -68,10 +93,10 @@ export default () => {
     total: 0,
   });
 
-  console.log('pagination: ', pagination);
   return (
     <React.Fragment>
       <ProTable<API.UserGroup>
+        actionRef={actionRef}
         columns={columns}
         request={async (params, sorter, filter) => {
           // 表单搜索项会从 params 传入，传递给后端接口。
@@ -79,8 +104,6 @@ export default () => {
           console.log(params, sorter, filter);
 
           const result = await getUserGroupList();
-          console.log('result: ', result);
-
           if (result.success && result.payload) {
             setPagination(formatPagation(result.payload));
 
@@ -105,6 +128,8 @@ export default () => {
         toolBarRender={() => [
           <ModalForm
             title="新增用户组"
+            reload={actionRef.current?.reload}
+            allAccess={allAccess}
             button={
               <Button type="primary">
                 <PlusOutlined /> 新增用户组

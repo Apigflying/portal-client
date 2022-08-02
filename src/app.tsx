@@ -6,7 +6,7 @@ import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
-import { getUserInfo } from './services/mars/api';
+import { getUserInfo } from './services/mars/user';
 import { TOKEN } from './utils/constant';
 
 const isDev = process.env.NODE_ENV === 'development';

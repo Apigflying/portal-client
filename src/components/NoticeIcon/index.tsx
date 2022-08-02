@@ -1,4 +1,4 @@
-import { getNotices } from '@/services/mars/api';
+import { getNotices } from '@/services/mars/user';
 import { useModel, useRequest } from '@umijs/max';
 import { message, Tag } from 'antd';
 import { groupBy } from 'lodash';

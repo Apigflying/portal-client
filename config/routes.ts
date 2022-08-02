@@ -1,7 +1,7 @@
 ﻿/*
  * @Author: Json Chen
  * @Date: 2022-07-20 15:57:14
- * @LastEditTime: 2022-07-29 11:08:20
+ * @LastEditTime: 2022-08-02 15:26:04
  * @LastEditors: Json Chen
  * @Description:
  * @FilePath: /mars-antd-pro/config/routes.ts
@@ -59,36 +59,6 @@ export default [
     access: 'LOG_READ',
     component: './Log'
   },
-
-
-
-  {
-    path: '/welcome',
-    name: 'welcome',
-    icon: 'smile',
-    component: './Welcome',
-  },
-  {
-    path: '/admin',
-    name: 'admin',
-    icon: 'crown',
-    access: 'canAdmin',
-    routes: [
-      {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        icon: 'smile',
-        component: './Welcome',
-      },
-    ],
-  },
-  {
-    name: 'list.table-list',
-    icon: 'table',
-    path: '/list',
-    component: './TableList',
-  },
-
 
   {
     path: '/',
