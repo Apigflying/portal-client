@@ -1,7 +1,7 @@
 ﻿/*
  * @Author: Json Chen
  * @Date: 2022-07-20 15:57:14
- * @LastEditTime: 2022-08-02 15:26:04
+ * @LastEditTime: 2022-08-03 16:55:06
  * @LastEditors: Json Chen
  * @Description:
  * @FilePath: /mars-antd-pro/config/routes.ts
@@ -29,6 +29,14 @@ export default [
     icon: 'home',
     component: './index',
   },
+  {
+    path: '/account',
+    name: 'account',
+    icon: 'shop',
+    component: './Account',
+  },
+
+
   {
     path: '/user',
     name: 'user',

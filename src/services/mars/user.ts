@@ -1,7 +1,7 @@
 /*
  * @Author: Json Chen
  * @Date: 2022-07-20 15:57:15
- * @LastEditTime: 2022-08-02 16:57:35
+ * @LastEditTime: 2022-08-03 16:30:09
  * @LastEditors: Json Chen
  * @Description:
  * @FilePath: /mars-antd-pro/src/services/mars/user.ts
@@ -10,7 +10,6 @@
 /* eslint-disable */
 import { PORTAL_API_PREFIX } from '@/utils/constant';
 import { request } from '@umijs/max';
-
 
 /** 获取当前的用户信息 */
 export async function getUserInfo(options?: { [key: string]: any }) {
@@ -28,9 +27,6 @@ export async function getUserList(options?: { [key: string]: any }) {
   });
 }
 
-
-
-
 // 获取用户组列表
 export async function getUserGroupList(options?: { [key: string]: any }) {
   return request<API.UserGroupListResult>(`${PORTAL_API_PREFIX}/user/group/list`, {
@@ -39,8 +35,19 @@ export async function getUserGroupList(options?: { [key: string]: any }) {
   });
 }
 
+// 获取用户组 name dist
+export async function getUserGroupDist(options?: { [key: string]: any }) {
+  return request<API.UserGroupListResult>(`${PORTAL_API_PREFIX}/user/group/distinct`, {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 // 检查用户组name是否存在
-export async function checkUserGroupName(body: API.UserGroupNameExistParams, options?: { [key: string]: any }) {
+export async function checkUserGroupName(
+  body: API.UserGroupNameExistParams,
+  options?: { [key: string]: any },
+) {
   return request<API.UserGroupNameExistResult>(`${PORTAL_API_PREFIX}/user/group/name/exist`, {
     method: 'POST',
     data: body,
@@ -48,14 +55,12 @@ export async function checkUserGroupName(body: API.UserGroupNameExistParams, opt
   });
 }
 
-
 export async function delUserGroup(id: string, options?: { [key: string]: any }) {
   return request<API.UserGroupListResult>(`${PORTAL_API_PREFIX}/user/group/del/${id}`, {
     method: 'DELETE',
     ...(options || {}),
   });
 }
-
 
 // 获取所有的权限
 export async function getAllAccess(options?: { [key: string]: any }) {
@@ -89,7 +94,10 @@ export async function createUserGroup(body: API.UserGroup, options?: { [key: str
     ...(options || {}),
   });
 }
-export async function editUserGroup(body: API.UserGroupEditParams, options?: { [key: string]: any }) {
+export async function editUserGroup(
+  body: API.UserGroupEditParams,
+  options?: { [key: string]: any },
+) {
   const { id, ...params } = body;
   return request<API.UserGroupSetResult>(`${PORTAL_API_PREFIX}/user/group/edit/${id}`, {
     method: 'POST',
@@ -98,38 +106,35 @@ export async function editUserGroup(body: API.UserGroupEditParams, options?: { [
   });
 }
 
+// 检查用户 name是否存在
+export async function checkUserName(
+  body: API.UserNameExistParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.UserNameExistResult>(`${PORTAL_API_PREFIX}/user/name/exist`, {
+    method: 'POST',
+    data: body,
+    ...(options || {}),
+  });
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export async function createUser(body: API.User, options?: { [key: string]: any }) {
+  return request<API.UserSetResult>(`${PORTAL_API_PREFIX}/user/add`, {
+    method: 'POST',
+    data: body,
+    ...(options || {}),
+  });
+}
+export async function editUser(body: API.User, options?: { [key: string]: any }) {
+  const { _id, ...params } = body;
+  return request<API.UserSetResult>(`${PORTAL_API_PREFIX}/user/edit/${_id}`, {
+    method: 'POST',
+    data: params,
+    ...(options || {}),
+  });
+}
 
 // =========================================
-
 
 /** 此处后端没有提供注释 GET /api/notices */
 export async function getNotices(options?: { [key: string]: any }) {

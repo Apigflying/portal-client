@@ -1,7 +1,7 @@
 /*
  * @Author: Json Chen
  * @Date: 2022-07-29 09:44:21
- * @LastEditTime: 2022-08-02 17:54:05
+ * @LastEditTime: 2022-08-03 10:47:31
  * @LastEditors: Json Chen
  * @Description:
  * @FilePath: /mars-antd-pro/src/pages/User/index.tsx
@@ -12,8 +12,11 @@ import { PlusOutlined } from '@ant-design/icons';
 import { ProTable } from '@ant-design/pro-components';
 import { Button } from 'antd';
 import React, { useState } from 'react';
+import ModalForm from './Components/ModalForm';
 
 export default () => {
+  // 获取所有用户组
+
   const [pagination, setPagination] = useState<API.PagationFormatted>({
     current: 1,
 
@@ -26,10 +29,30 @@ export default () => {
     {
       title: '名称',
       dataIndex: 'name',
+      render(_: any, { name }: API.UserInfo) {
+        return (
+          <div>
+            <div>{name}</div>
+            <div>
+              <Button type="text">编辑</Button>
+              <Button type="text">密码</Button>
+              <Button type="text">锁定</Button>
+              <Button type="text">删除</Button>
+            </div>
+          </div>
+        );
+      },
     },
     {
       title: '邮箱',
       dataIndex: 'email',
+    },
+    {
+      title: '用户组',
+      dataIndex: 'group',
+      render(_: any, { group }: API.UserInfo) {
+        return group?.length ? group.map((item) => item).join(',') : '-';
+      },
     },
     {
       title: '创建时间',
@@ -73,9 +96,14 @@ export default () => {
         search={false}
         headerTitle="高级表格"
         toolBarRender={() => [
-          <Button type="primary">
-            <PlusOutlined /> 新增用户组
-          </Button>,
+          <ModalForm
+            title="新增用户"
+            button={
+              <Button type="primary">
+                <PlusOutlined /> 新增用户
+              </Button>
+            }
+          ></ModalForm>,
         ]}
       />
     </React.Fragment>

@@ -1,46 +1,36 @@
+import { checkUserName, createUser, editUser, getUserGroupDist } from '@/services/mars/user';
+import { PORTAL_API_PREFIX } from '@/utils/constant';
+import { langMaps } from '@/utils/mapping';
 import {
-  checkUserGroupName,
-  createUserGroup,
-  editUserGroup,
-  getUserGroupDetail,
-} from '@/services/mars/user';
-import { ModalForm, ProForm, ProFormText, useDebounceFn } from '@ant-design/pro-components';
-import { useIntl } from '@umijs/max';
-import { Checkbox, Form, message } from 'antd';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+  ModalForm,
+  ProFormCheckbox,
+  ProFormSelect,
+  ProFormText,
+  ProFormUploadDragger,
+  useDebounceFn,
+} from '@ant-design/pro-components';
+import { getAllLocales, useIntl } from '@umijs/max';
+import { Form, message } from 'antd';
 import { useState } from 'react';
 
 type IProps = {
   id?: string;
   title: string;
-  allAccess: string[];
   button: JSX.Element;
   reload?: () => void;
 };
 
-export default ({ id, title, button, allAccess, reload }: IProps) => {
+export default ({ id, title, button, reload }: IProps) => {
   const intl = useIntl();
+  console.log('getAllLocales', getAllLocales());
 
   const [form] = Form.useForm();
-  const [userGroupDetail, setUserGroupDetail] = useState<API.UserGroup | undefined>(undefined);
+  const [userDetail, setUserDetail] = useState<API.User | undefined>(undefined);
 
-  const { run: validateUserGroupName } = useDebounceFn(async (name: string) => {
-    const result = await checkUserGroupName({ name, id });
+  const { run: validateUserName } = useDebounceFn(async (name: string) => {
+    const result = await checkUserName({ name, id });
     return result.payload;
   }, 500);
-
-  const onVisibleChange = async (visible: boolean) => {
-    if (visible && id) {
-      const result = await getUserGroupDetail(id);
-      if (result.success) {
-        setUserGroupDetail(result.payload);
-        form.setFieldsValue({
-          name: result.payload.name,
-          access: result.payload.access,
-        });
-      }
-    }
-  };
 
   return (
     <ModalForm
@@ -51,71 +41,87 @@ export default ({ id, title, button, allAccess, reload }: IProps) => {
         destroyOnClose: true,
       }}
       form={form}
-      onVisibleChange={onVisibleChange}
       submitTimeout={2000}
-      onFinish={async (values: API.UserGroup) => {
-        const result = id ? await editUserGroup({ id, ...values }) : await createUserGroup(values);
+      onFinish={async (values: API.User) => {
+        const result = id ? await editUser({ _id: id, ...values }) : await createUser(values);
         result.success && message.success('操作成功!');
         reload && reload();
         return result.success;
       }}
     >
-      <ProForm.Group label="用户组名称">
-        <ProFormText
-          width="md"
-          name="name"
-          placeholder="请输入用户组名称"
-          hasFeedback
-          initialValue={userGroupDetail?.name}
-          rules={[
-            {
-              required: true,
-              message: 'required!',
+      <ProFormText
+        width="md"
+        name="name"
+        label="名称"
+        placeholder="请输入用户名称"
+        hasFeedback
+        initialValue={userDetail?.name}
+        rules={[
+          {
+            required: true,
+            message: 'required!',
+          },
+          {
+            validateTrigger: ['onChange'],
+            async validator(_, value: string) {
+              const exist = await validateUserName(value);
+              if (exist) {
+                return Promise.reject(
+                  intl.formatMessage({
+                    id: 'pages.user.name.exist',
+                  }),
+                );
+              }
+              return Promise.resolve();
             },
-            {
-              validateTrigger: ['onChange'],
-              async validator(_, value: string) {
-                const exist = await validateUserGroupName(value);
-                if (exist) {
-                  return Promise.reject(
-                    intl.formatMessage({
-                      id: 'pages.user.group.name.exist',
-                    }),
-                  );
-                }
-                return Promise.resolve();
-              },
-            },
-          ]}
-        />
-      </ProForm.Group>
-      <ProForm.Group label="权限管理">
-        <Form.Item
-          shouldUpdate={(p, c) => {
-            return p?.access?.length !== c?.access?.length;
-          }}
-        >
-          {({ getFieldValue, setFieldsValue }) => {
-            const currentAccess = getFieldValue('access') || [];
-            return (
-              <Checkbox
-                indeterminate={!!currentAccess.length && currentAccess.length !== allAccess.length}
-                checked={currentAccess.length === allAccess.length}
-                onChange={(e: CheckboxChangeEvent) => {
-                  setFieldsValue({
-                    access: e.target.checked ? allAccess : [],
-                  });
-                }}
-              >
-                全选
-              </Checkbox>
-            );
-          }}
-        </Form.Item>
-        <Form.Item name="access" initialValue={userGroupDetail?.access || []}>
-          <Checkbox.Group options={allAccess}></Checkbox.Group>
-        </Form.Item>
-      </ProForm.Group>
+          },
+        ]}
+      />
+      <ProFormText.Password label="密码" name="password" />
+      <ProFormText label="邮箱" name="email" />
+      <ProFormUploadDragger
+        label="头像"
+        name="avatar"
+        action={`${PORTAL_API_PREFIX}/upload/image`}
+      />
+      <ProFormSelect
+        name="group"
+        label="用户组"
+        request={async () => {
+          // const groups = await getUserGroupDistincts();
+          const results = await getUserGroupDist();
+          console.log('results: ', results);
+          return [
+            { label: '全部', value: 'all' },
+            { label: '未解决', value: 'open' },
+            { label: '已解决', value: 'closed' },
+            { label: '解决中', value: 'processing' },
+          ];
+        }}
+      />
+      <ProFormSelect
+        name="language"
+        label="语言"
+        options={langMaps.map((item) => {
+          return {
+            label: item.name,
+            value: item.locale,
+          };
+        })}
+        // request={async () => {
+        //   // 获取语言列表
+        //   // const groups = await getUserGroupDistincts();
+        //   langMaps
+        //   return [
+        //     { label: '全部', value: 'all' },
+        //     { label: '未解决', value: 'open' },
+        //     { label: '已解决', value: 'closed' },
+        //     { label: '解决中', value: 'processing' },
+        //   ];
+        // }}
+      />
+
+      <ProFormCheckbox name="isLock" label="锁定" />
     </ModalForm>
   );
 };
